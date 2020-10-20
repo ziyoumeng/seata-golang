@@ -72,7 +72,7 @@ func ImplementTCC(v TccProxyService) {
 			if !rootContext.InGlobalTransaction() {
 				args := make([]interface{}, 0)
 				args = append(args, businessActionContext)
-				return proxy.Invoke(methodDesc, nil, args)
+				return proxy.Invoke(methodDesc, nil, args) //调用tcc.Try方法
 			}
 
 			returnValues, _ := proceed(methodDesc, businessActionContext, resource)
@@ -81,11 +81,11 @@ func ImplementTCC(v TccProxyService) {
 	}
 
 	numField := valueOfElem.NumField()
-	for i := 0; i < numField; i++ {
+	for i := 0; i < numField; i++ {//遍历TCCProxyServiceA的字段
 		t := typeOf.Field(i)
 		methodName := t.Name
 		f := valueOfElem.Field(i)
-		if f.Kind() == reflect.Func && f.IsValid() && f.CanSet() && methodName == TRY_METHOD {
+		if f.Kind() == reflect.Func && f.IsValid() && f.CanSet() && methodName == TRY_METHOD { //是否为 TCCProxyServiceA.Try字段
 			if t.Type.NumIn() != 1 && t.Type.In(0) != businessActionContextType {
 				panic("prepare method argument is not BusinessActionContext")
 			}
@@ -113,6 +113,7 @@ func ImplementTCC(v TccProxyService) {
 			tccResourceManager.RegisterResource(tccResource)
 
 			// do method proxy here:
+			//设置TCCProxyServiceA.Try方法的实现方法
 			f.Set(reflect.MakeFunc(f.Type(), makeCallProxy(tryMethodDesc, tccResource)))
 			log.Debugf("set method [%s]", methodName)
 		}

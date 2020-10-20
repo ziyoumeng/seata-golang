@@ -19,6 +19,8 @@ var (
 	typeOfError = reflect.TypeOf((*error)(nil)).Elem()
 
 	// serviceDescriptorMap, string -> *ServiceDescriptor
+	// 服务对象注册在内存map中
+	// 服务名->ServiceDescriptor => 方法名 ->MethodDescriptor
 	serviceDescriptorMap = sync.Map{}
 )
 
@@ -39,7 +41,7 @@ type ServiceDescriptor struct {
 	Methods      sync.Map //string -> *MethodDescriptor
 }
 
-// Register
+// Register 注册服务下的某个方法
 func Register(service interface{}, methodName string) *MethodDescriptor {
 	serviceType := reflect.TypeOf(service)
 	serviceValue := reflect.ValueOf(service)

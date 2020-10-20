@@ -71,7 +71,7 @@ func Implement(v GlobalTransactionProxyService) {
 			tx := GetCurrentOrCreate(invCtx)
 			defer tx.Resume(suspendedResourcesHolder, invCtx)
 
-			switch txInfo.Propagation {
+			switch txInfo.Propagation { //todo 啥意思这个类型
 			case REQUIRED:
 				break
 			case REQUIRES_NEW:

@@ -20,7 +20,7 @@ import (
 var (
 	DBKEYS_SPLIT_CHAR = ","
 )
-
+//seata的rm
 type AbstractResourceManager struct {
 	RpcClient     *client.RpcRemoteClient
 	ResourceCache map[string]model.IResource
@@ -47,6 +47,7 @@ func (resourceManager AbstractResourceManager) GetManagedResources() map[string]
 	return resourceManager.ResourceCache
 }
 
+//向tc服注册分支事务
 func (resourceManager AbstractResourceManager) BranchRegister(branchType meta.BranchType, resourceId string,
 	clientId string, xid string, applicationData []byte, lockKeys string) (int64, error) {
 	request := protocal.BranchRegisterRequest{
@@ -67,7 +68,7 @@ func (resourceManager AbstractResourceManager) BranchRegister(branchType meta.Br
 		return 0, response.GetError()
 	}
 }
-
+//向tc报告分支状态
 func (resourceManager AbstractResourceManager) BranchReport(branchType meta.BranchType, xid string, branchId int64,
 	status meta.BranchStatus, applicationData []byte) error {
 	request := protocal.BranchReportRequest{
@@ -86,7 +87,7 @@ func (resourceManager AbstractResourceManager) BranchReport(branchType meta.Bran
 	}
 	return nil
 }
-
+//todo ?
 func (resourceManager AbstractResourceManager) LockQuery(ctx *context.RootContext, branchType meta.BranchType, resourceId string, xid string,
 	lockKeys string) (bool, error) {
 	return false, nil
@@ -98,7 +99,7 @@ func (resourceManager AbstractResourceManager) handleRegisterRM() {
 		resourceManager.doRegisterResource(serverAddress)
 	}
 }
-
+//向tc注册所有资源
 func (resourceManager AbstractResourceManager) doRegisterResource(serverAddress string) {
 	if resourceManager.ResourceCache == nil || len(resourceManager.ResourceCache) == 0 {
 		return
@@ -114,7 +115,7 @@ func (resourceManager AbstractResourceManager) doRegisterResource(serverAddress 
 
 	resourceManager.RpcClient.RegisterResource(serverAddress, message)
 }
-
+//那所有资源id，逗号分隔 （ActionName,ActionName...）
 func (resourceManager AbstractResourceManager) getMergedResourceKeys() string {
 	var builder strings.Builder
 	if resourceManager.ResourceCache != nil && len(resourceManager.ResourceCache) > 0 {
@@ -123,7 +124,7 @@ func (resourceManager AbstractResourceManager) getMergedResourceKeys() string {
 			builder.WriteString(DBKEYS_SPLIT_CHAR)
 		}
 		resourceKeys := builder.String()
-		resourceKeys = resourceKeys[:len(resourceKeys)-1]
+		resourceKeys = resourceKeys[:len(resourceKeys)-1] //todo 为什么不直接返回
 		return resourceKeys
 	}
 	return ""

@@ -4,10 +4,10 @@ go 1.14
 
 require (
 	github.com/Davmuz/gqt v0.0.0-20161229104334-7589d282c7c3
-	github.com/apache/dubbo-getty v1.3.9
+	github.com/apache/dubbo-getty v1.3.10
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/denisenkom/go-mssqldb v0.0.0-20191124224453-732737034ffd // indirect
-	github.com/dubbogo/gost v1.9.0
+	github.com/dubbogo/gost v1.9.2
 	github.com/gin-gonic/gin v1.6.2
 	github.com/go-playground/assert/v2 v2.0.1
 	github.com/go-sql-driver/mysql v1.4.1
@@ -27,7 +27,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v0.9.3
 	github.com/rcrowley/go-metrics v0.0.0-20181016184325-3113b8401b8a
-	github.com/shima-park/agollo v1.2.6
+	github.com/shima-park/agollo v1.2.7
 	github.com/stretchr/testify v1.6.1
 	github.com/urfave/cli/v2 v2.2.0
 	go.uber.org/atomic v1.6.0
