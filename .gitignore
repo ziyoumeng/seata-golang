@@ -19,3 +19,4 @@ root.data
 root.data.1
 trace.out
 tc/app/cmd/trace.out
+samples/tcc/cmd
