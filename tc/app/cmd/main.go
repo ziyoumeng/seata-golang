@@ -9,7 +9,7 @@ import (
 )
 
 import (
-	gxnet "github.com/dubbogo/gost/net"
+	"github.com/dubbogo/gost/net"
 	"github.com/urfave/cli/v2"
 )
 
@@ -47,7 +47,6 @@ func main() {
 
 					config.InitConf(configPath)
 					model.Migrate()
-					panic("migrate ok")
 					conf := config.GetServerConfig()
 					port, _ := strconv.Atoi(conf.Port)
 					common.XID.Init(ip, port)
