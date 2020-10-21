@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/transaction-wg/seata-golang/base/common"
+	"github.com/transaction-wg/seata-golang/tc/model"
 	_ "net/http/pprof"
 	"os"
 	"strconv"
@@ -45,6 +46,8 @@ func main() {
 					ip, _ := gxnet.GetLocalIP()
 
 					config.InitConf(configPath)
+					model.Migrate()
+					panic("migrate ok")
 					conf := config.GetServerConfig()
 					port, _ := strconv.Atoi(conf.Port)
 					common.XID.Init(ip, port)
@@ -65,3 +68,4 @@ func main() {
 		log.Error(err)
 	}
 }
+
